@@ -20,8 +20,8 @@ var utils = module.exports = {
     // Provide a testable iugu instance
     // That is, with mock-requests built in and hookable
 
-    var Iugu = require('../lib/iugu');
-    var iuguInstance = Iugu('fakeAuthToken');
+    const Iugu = require('../lib/iugu');
+    const iuguInstance = Iugu('fakeAuthToken');
 
     iuguInstance.REQUESTS = [];
 

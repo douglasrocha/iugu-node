@@ -1,22 +1,22 @@
 'use strict';
 
-var testUtils = require('./testUtils');
-var chai = require('chai');
-var when = require('when');
-var iugu = require('../lib/iugu')(
+const testUtils = require('./testUtils');
+const chai = require('chai');
+const when = require('when');
+const iugu = require('../lib/iugu')(
   testUtils.getUserIuguKey(),
   'latest'
 );
 
-var expect = chai.expect;
+const expect = chai.expect;
 
-var CUSTOMER_DATA = {
+const CUSTOMER_DATA = {
   'email': 'email@email.com',
   'name': 'Nome do Cliente',
   'notes': 'Anotações Gerais'
 };
 
-var PLAN_DATA = {
+const PLAN_DATA = {
   'name': 'Plano Básico',
   'identifier': 'basic_plan',
   'interval': '1',
@@ -28,7 +28,7 @@ var PLAN_DATA = {
   'features[][value]': '10'
 }
 
-var SUBSCRIPTION_DATA = {
+const SUBSCRIPTION_DATA = {
   'plan_identifier': 'basic_plan',
   'customer_id': '',
   'only_on_charge_success': 'false',
@@ -37,7 +37,7 @@ var SUBSCRIPTION_DATA = {
   'subitems[][quantity]': '1'
 }
 
-var PAYMENT_METHOD_DATA = {
+const PAYMENT_METHOD_DATA = {
   'description': 'Meu Cartão de Crédito',
   'item_type': 'credit_card',
   'data[number]': '4111111111111111',
@@ -49,14 +49,12 @@ var PAYMENT_METHOD_DATA = {
 };
 
 describe('Flows', function() {
-
   // Note: These tests must be run as one so we can retrieve the
   // default_currency (required in subsequent tests);
-
-  var cleanup = new testUtils.CleanupUtility();
+  const cleanup = new testUtils.CleanupUtility();
   this.timeout(6000);
   
-  describe('Plan+Subscription flow', function() {
+  describe('Plan+Subscription flow', () => {
 /*
     it('Allows me to: Create a plan and subscribe a customer to it', function() {
       return expect(
@@ -64,8 +62,8 @@ describe('Flows', function() {
           iugu.customers.create(CUSTOMER_DATA)
         ).then(function(j) {
 
-          var plan = j[0];
-          var customer = j[1];
+          const plan = j[0];
+          const customer = j[1];
           SUBSCRIPTION_DATA.customer_id = customer.id;          
           
           cleanup.deleteCustomer(customer.id);
@@ -83,40 +81,36 @@ describe('Flows', function() {
 
     });
     */
-    it('Allows me to: Create a plan and subscribe a customer to it using bankslip', function() {
+    it('Allows me to: Create a plan and subscribe a customer to it using bankslip', () => {
       return expect(
-        when.join(
-          iugu.customers.create(CUSTOMER_DATA)
-        ).then(function(j) {
-
-          var plan = j[0];
-          var customer = j[1];
-          SUBSCRIPTION_DATA.customer_id = plan.id;
-          SUBSCRIPTION_DATA.plan_identifier = 'plano_basico';
-          SUBSCRIPTION_DATA.credits_based = false;
-          //cleanup.deleteCustomer(customer.id);
-          //cleanup.deletePlan(plan.id);
-
-          return iugu.subscriptions.create(SUBSCRIPTION_DATA);
-        }).then(function(subscription) {
-          //cleanup.deleteInvoice(subscription.recent_invoices[0].id);
-          //cleanup.deleteSubscription(subscription.id);
-          SUBSCRIPTION_DATA.credits_cycle = '1000';
-          SUBSCRIPTION_DATA.price_cents = '5000';
-          SUBSCRIPTION_DATA.credits_based = true;
-          return iugu.subscriptions.create(SUBSCRIPTION_DATA);
-        }).then(function(subscription) {
-          //cleanup.deleteInvoice(subscription.recent_invoices[0].id);
-          //cleanup.deleteSubscription(subscription.id);
-
-          return [subscription.suspended, subscription.currency];
-        })
+        when
+          .join(iugu.customers.create(CUSTOMER_DATA))
+          .then((j) => {
+            const plan = j[0];
+            const customer = j[1];
+            SUBSCRIPTION_DATA.customer_id = plan.id;
+            SUBSCRIPTION_DATA.plan_identifier = 'plano_basico';
+            SUBSCRIPTION_DATA.credits_based = false;
+            //cleanup.deleteCustomer(customer.id);
+            //cleanup.deletePlan(plan.id);
+            return iugu.subscriptions.create(SUBSCRIPTION_DATA);
+          }).then((subscription) => {
+            //cleanup.deleteInvoice(subscription.recent_invoices[0].id);
+            //cleanup.deleteSubscription(subscription.id);
+            SUBSCRIPTION_DATA.credits_cycle = '1000';
+            SUBSCRIPTION_DATA.price_cents = '5000';
+            SUBSCRIPTION_DATA.credits_based = true;
+            return iugu.subscriptions.create(SUBSCRIPTION_DATA);
+          }).then((subscription) => {
+            //cleanup.deleteInvoice(subscription.recent_invoices[0].id);
+            //cleanup.deleteSubscription(subscription.id);
+            return [subscription.suspended, subscription.currency];
+          })
       ).to.eventually.deep.equal([false, 'BRL']);
-
     });
 /*
     it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', function() {
-      var plan;
+      let plan;
       return expect(
         when.join(
           iugu.plans.create({
@@ -130,7 +124,7 @@ describe('Flows', function() {
         ).then(function(j) {
 
           plan = j[0];
-          var customer = j[1];
+          const customer = j[1];
 
           cleanup.deleteCustomer(customer.id);
           cleanup.deletePlan(plan.id);
@@ -187,8 +181,8 @@ describe('Flows', function() {
           iugu.customers.create(CUSTOMER_DETAILS)
         ).then(function(j) {
 
-          var plan = j[0];
-          var customer = j[1];
+          const plan = j[0];
+          const customer = j[1];
 
           cleanup.deleteCustomer(customer.id);
           cleanup.deletePlan(plan.id);
@@ -214,7 +208,7 @@ describe('Flows', function() {
         'foobarbazteston###etwothree' + +new Date
       ].forEach(function(planID) {
         it('Allows me to create and retrieve plan with ID: ' + planID, function() {
-          var plan;
+          let plan;
           return expect(
             iugu.plans.create({
               id: planID,
