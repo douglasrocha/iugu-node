@@ -1,3 +1,5 @@
+test/TestKey.js
+
 lib-cov
 *.seed
 *.log
