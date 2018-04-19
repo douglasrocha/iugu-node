@@ -10,9 +10,9 @@ var _package = require('../package.json');
 
 var _package2 = _interopRequireDefault(_package);
 
-var _child_process = require('child_process');
+var _bowser = require('bowser');
 
-var _child_process2 = _interopRequireDefault(_child_process);
+var _bowser2 = _interopRequireDefault(_bowser);
 
 var _http = require('http');
 
@@ -75,9 +75,6 @@ var Iugu = function () {
     _classCallCheck(this, Iugu);
 
     this.initializeConstants();
-    if (!(this instanceof Iugu)) {
-      return new Iugu(key, version);
-    }
 
     this._api = {
       auth: null,
@@ -103,14 +100,14 @@ var Iugu = function () {
       this.DEFAULT_API_VERSION = null;
       this.DEFAULT_TIMEOUT = _http2.default.createServer().timeout;
       this.PACKAGE_VERSION = _package2.default.version;
-      this.USER_AGENT = {
+      this.USER_AGENT = Object.assign({}, _bowser2.default, {
         bindings_version: this.PACKAGE_VERSION,
         lang: 'node',
         lang_version: _process2.default.version,
         platform: _process2.default.platform,
         publisher: 'iugu',
         uname: null
-      };
+      });
       this.USER_AGENT_SERIALIZED = null;
       this.IuguResource = _IuguResource2.default;
       this.resources = {
@@ -129,43 +126,25 @@ var Iugu = function () {
   }, {
     key: 'setHost',
     value: function setHost(host, port, protocol) {
-      this._setApiField('host', host);
-      if (port) this.setPort(port);
-      if (protocol) this.setProtocol(protocol);
-    }
-  }, {
-    key: 'setProtocol',
-    value: function setProtocol(protocol) {
-      this._setApiField('protocol', protocol.toLowerCase());
-    }
-  }, {
-    key: 'setPort',
-    value: function setPort(port) {
-      this._setApiField('port', port);
+      if (host) this._api.host = host;
+      if (port) this._api.port = port;
+      if (protocol) this._api.protocol = protocol.toLowerCase();
     }
   }, {
     key: 'setApiVersion',
     value: function setApiVersion(version) {
-      if (version) {
-        this._setApiField('version', version);
-      }
+      if (version) this._api.version = version;
     }
   }, {
     key: 'setApiKey',
     value: function setApiKey(key) {
-      if (key) {
-        this._setApiField('auth', 'Basic ' + Buffer.from(key + ':').toString('base64'));
-      }
+      if (!key) return;
+      this._api.auth = 'Basic ' + Buffer.from(key + ':').toString('base64');
     }
   }, {
     key: 'setTimeout',
     value: function setTimeout(timeout) {
-      this._setApiField('timeout', timeout == null ? this.DEFAULT_TIMEOUT : timeout);
-    }
-  }, {
-    key: '_setApiField',
-    value: function _setApiField(key, value) {
-      this._api[key] = value;
+      if (timeout) this._api.timeout = timeout;
     }
   }, {
     key: 'getApiField',
@@ -173,24 +152,10 @@ var Iugu = function () {
       return this._api[key];
     }
   }, {
-    key: 'getConstant',
-    value: function getConstant(c) {
-      return Iugu[c];
-    }
-  }, {
     key: 'getClientUserAgent',
     value: function getClientUserAgent(cb) {
-      var _this = this;
-
-      if (this.USER_AGENT_SERIALIZED) {
-        return cb(this.USER_AGENT_SERIALIZED);
-      }
-
-      _child_process2.default.exec('uname -a', function (err, uname) {
-        _this.USER_AGENT.uname = uname || 'UNKNOWN';
-        _this.USER_AGENT_SERIALIZED = JSON.stringify(_this.USER_AGENT);
-        cb(_this.USER_AGENT_SERIALIZED);
-      });
+      this.USER_AGENT = _bowser2.default;
+      this.USER_AGENT_SERIALIZED = JSON.stringify(this.USER_AGENT);
     }
   }, {
     key: '_prepResources',

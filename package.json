@@ -29,10 +29,11 @@
     "mocha-as-promised": "~1.4.0"
   },
   "dependencies": {
+    "bowser": "^1.9.3",
     "when": "~3.1.0"
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha --compilers js:babel-core/register \"test/**/*.js\""
   }
 }

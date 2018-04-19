@@ -194,15 +194,14 @@ var IuguResource = function () {
 
       var requestData = _utils2.default.stringifyRequestData(data || {});
       var self = this;
-      console.log(requestData);
       var apiVersion = this._iugu.getApiField('version');
       var headers = {
         // Use specified auth token or use default from this stripe instance:
-        'Authorization': auth ? 'Basic ' + new Buffer(auth + ':').toString('base64') : this._iugu.getApiField('auth'),
+        'Authorization': auth ? 'Basic ' + Buffer.from(auth + ':').toString('base64') : this._iugu.getApiField('auth'),
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': requestData.length,
-        'User-Agent': 'Iugu/v1 NodeBindings/' + this._iugu.getConstant('PACKAGE_VERSION')
+        'User-Agent': 'Iugu/v1 NodeBindings/' + this._iugu.PACKAGE_VERSION
       };
 
       if (apiVersion) {
