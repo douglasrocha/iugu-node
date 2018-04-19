@@ -33,6 +33,6 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha"
+    "test": "mocha --compilers js:babel-core/register"
   }
 }
