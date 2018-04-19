@@ -15,7 +15,7 @@ function _Error(raw) {
 _Error.prototype = Object.create(Error.prototype);
 
 _Error.prototype.type = 'GenericError';
-_Error.prototype.populate = function(type, message) {
+_Error.prototype.populate = function (type, message) {
   this.type = type;
   this.message = message;
 };
@@ -28,24 +28,24 @@ _Error.extend = utils.protoExtend;
  */
 var IuguError = _Error.IuguError = _Error.extend({
   type: 'IuguError',
-  populate: function(raw) {
+  populate: function populate(raw) {
 
     // Move from prototype def (so it appears in stringified obj)
     this.type = this.type;
+
     this.rawType = raw.type;
     this.code = raw.code;
     this.param = raw.param;
     this.message = raw.message;
     this.detail = raw.detail;
     this.raw = raw;
-
   }
 });
 
 /**
  * Helper factory which takes raw iugu errors and outputs wrapping instances
  */
-IuguError.generate = function(rawIuguError) {
+IuguError.generate = function (rawIuguError) {
   switch (rawIuguError.type) {
     case 'card_error':
       return new _Error.IuguCardError(rawIuguError);

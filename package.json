@@ -16,17 +16,23 @@
   "engines": {
     "node": ">= v0.8.0"
   },
-  "main": "lib/iugu.js",
+  "main": "dist/iugu.js",
   "devDependencies": {
-    "mocha": "~1.13.0",
+    "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "chai": "~1.8.0",
     "chai-as-promised": "~4.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "mocha": "~1.13.0",
     "mocha-as-promised": "~1.4.0"
   },
   "dependencies": {
     "when": "~3.1.0"
   },
   "scripts": {
+    "build": "gulp build",
     "test": "mocha"
   }
 }

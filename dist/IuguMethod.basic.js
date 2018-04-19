@@ -1,7 +1,10 @@
-import iuguMethod from './IuguMethod';
-import utils from './utils';
+'use strict';
 
-export default {
+var iuguMethod = require('./IuguMethod');
+var utils = require('./utils');
+
+module.exports = {
+
   create: iuguMethod({
     method: 'POST'
   }),
@@ -22,9 +25,11 @@ export default {
     urlParams: ['id']
   }),
 
+  // Avoid 'delete' keyword in JS
   del: iuguMethod({
     method: 'DELETE',
     path: '{id}',
     urlParams: ['id']
   })
+
 };

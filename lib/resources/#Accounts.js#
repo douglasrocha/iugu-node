@@ -1,6 +1,6 @@
 import IuguResource from '../IuguResource');
 
-module.exports = IuguResource.extend({
+export default class Accounts extends IuguResource {
 
   path: 'accounts',
   includeBasic: ['retrieve'],
@@ -16,5 +16,4 @@ module.exports = IuguResource.extend({
     path: '{accountId}/request_withdraw',
     urlParams: ['accountId']
   })
-
-});
+}
