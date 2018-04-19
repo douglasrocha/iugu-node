@@ -1,8 +1,17 @@
 'use strict';
 
-var utils = require('./utils');
+var _utils = require('./utils');
 
-module.exports = _Error;
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*
+export default class _Error extends Error {
+  constructor () {
+  }
+}
+*/
 
 /**
  * Generic Error class to wrap any errors returned by iugu-node
@@ -20,7 +29,7 @@ _Error.prototype.populate = function (type, message) {
   this.message = message;
 };
 
-_Error.extend = utils.protoExtend;
+_Error.extend = _utils2.default.protoExtend;
 
 /**
  * Create subclass of internal Error class

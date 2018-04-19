@@ -3,8 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var _arguments = arguments;
-var querystring = require('querystring');
+
+var _querystring = require('querystring');
+
+var _querystring2 = _interopRequireDefault(_querystring);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var hasOwn = {}.hasOwnProperty;
 var toString = {}.toString;
 
@@ -40,8 +45,7 @@ var stringifyRequestData = function stringifyRequestData(data) {
       } else if (Array.isArray(data[i])) {
 
         for (var a = 0, l = data[i].length; a < l; ++a) {
-
-          if (utils.isObject(data[i][a])) {
+          if (isObject(data[i][a])) {
             var _hasProps = false;
             for (var ii in data[i][a]) {
               if (hasOwn.call(data[i][a], ii)) {
@@ -85,35 +89,9 @@ var makeURLInterpolator = function makeURLInterpolator(str) {
   return new Function('o', fString);
 };
 
-/**
- * Provide simple "Class" extension mechanism
- */
-var protoExtend = function protoExtend(sub) {
-  var Super = undefined;
-  var Constructor = hasOwn.call(sub, 'constructor') ? sub.constructor : function () {
-    Super.apply(undefined, _arguments);
-  };
-
-  Constructor.prototype = Object.create(Super.prototype);
-
-  for (var i in sub) {
-    if (hasOwn.call(sub, i)) {
-      Constructor.prototype[i] = sub[i];
-    }
-  }
-
-  for (i in Super) {
-    if (hasOwn.call(Super, i)) {
-      Constructor[i] = Super[i];
-    }
-  }
-  return Constructor;
-};
-
 exports.default = {
   isAuthKey: isAuthKey,
   isObject: isObject,
   stringifyRequestData: stringifyRequestData,
-  makeURLInterpolator: makeURLInterpolator,
-  protoExtend: protoExtend
+  makeURLInterpolator: makeURLInterpolator
 };
