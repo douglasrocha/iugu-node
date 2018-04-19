@@ -1,7 +1,19 @@
 'use strict';
 
-var path = require('path');
-var utils = require('./utils');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _arguments = arguments;
+
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Create an API method from the declared spec.
@@ -14,23 +26,19 @@ var utils = require('./utils');
  *  optionally passed through a hash (Object) as the penultimate argument
  *  (preceeding the also-optional callback argument
  */
-module.exports = function iuguMethod(spec) {
-
-  var commandPath = utils.makeURLInterpolator(spec.path || '');
+exports.default = function (spec) {
+  var commandPath = _utils2.default.makeURLInterpolator(spec.path || '');
   var requestMethod = (spec.method || 'GET').toUpperCase();
   var urlParams = spec.urlParams || [];
 
   return function () {
-
-    var self = this;
-    var args = [].slice.call(arguments);
-
+    var self = undefined;
+    var args = [].slice.call(_arguments);
     var callback = typeof args[args.length - 1] == 'function' && args.pop();
-    var auth = args.length > urlParams.length && utils.isAuthKey(args[args.length - 1]) ? args.pop() : null;
-    var data = utils.isObject(args[args.length - 1]) ? args.pop() : {};
-    var urlData = this.createUrlData();
-
-    var deferred = this.createDeferred(callback);
+    var auth = args.length > urlParams.length && _utils2.default.isAuthKey(args[args.length - 1]) ? args.pop() : null;
+    var data = _utils2.default.isObject(args[args.length - 1]) ? args.pop() : {};
+    var urlData = undefined.createUrlData();
+    var deferred = undefined.createDeferred(callback);
 
     for (var i = 0, l = urlParams.length; i < l; ++i) {
       var arg = args[0];
@@ -41,10 +49,10 @@ module.exports = function iuguMethod(spec) {
     }
 
     if (args.length) {
-      throw new Error('Iugu: Unknown arguments (' + args + '). Did you mean to pass an options object? ');
+      throw new Error('Iugu: Unknown arguments (' + args + '). Did you mean to pass an options object?');
     }
 
-    var requestPath = this.createFullPath(commandPath, urlData);
+    var requestPath = undefined.createFullPath(commandPath, urlData);
 
     self._request(requestMethod, requestPath, data, auth, function (err, response) {
       if (err) {

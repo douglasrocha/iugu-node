@@ -32,7 +32,6 @@ var IuguError = _Error.IuguError = _Error.extend({
 
     // Move from prototype def (so it appears in stringified obj)
     this.type = this.type;
-
     this.rawType = raw.type;
     this.code = raw.code;
     this.param = raw.param;

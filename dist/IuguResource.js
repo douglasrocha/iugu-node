@@ -133,7 +133,7 @@ var IuguResource = function () {
           try {
             response = JSON.parse(response);
             if (response.error) {
-              var err;
+              var err = void 0;
               if (res.statusCode === 401) {
                 err = new _Error2.default.IuguAuthenticationError(response.error);
               } else {
@@ -166,13 +166,13 @@ var IuguResource = function () {
     }
   }, {
     key: 'makeRequest',
-    value: function makeRequest() {
+    value: function makeRequest(headers, requestData, callback) {
       var timeout = self._iugu.getApiField('timeout');
       var req = (self._iugu.getApiField('protocol') == 'http' ? _http2.default : _https2.default).request({
         host: self._iugu.getApiField('host'),
         port: self._iugu.getApiField('port'),
         path: _path2.default,
-        method: method,
+        method: this.method,
         headers: headers
       });
 
@@ -212,7 +212,7 @@ var IuguResource = function () {
       // Grab client-user-agent before making the request:
       this._iugu.getClientUserAgent(function (cua) {
         headers['X-Iugu-Client-User-Agent'] = cua;
-        _this2.makeRequest();
+        _this2.makeRequest(headers, requestData, callback);
       });
     }
   }]);

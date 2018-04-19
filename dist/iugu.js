@@ -6,23 +6,69 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _package = require('../package.json');
 
-var packageJson = require('../package.json');
-var exec = require('child_process').exec;
-var http = require('http');
-var process = require('process');
-var IuguResource = require('./IuguResource');
-var Accounts = require('./resources/Accounts');
-var Charge = require('./resources/Charge');
-var Customers = require('./resources/Customers');
-var Invoices = require('./resources/Invoices');
-var MarketPlace = require('./resources/MarketPlace');
-var Plans = require('./resources/Plans');
-var Subscriptions = require('./resources/Subscriptions');
-var PaymentToken = require('./resources/PaymentToken');
-var Transfers = require('./resources/Transfers');
-var CustomerPaymentMethods = require('./resources/CustomerPaymentMethods');
+var _package2 = _interopRequireDefault(_package);
+
+var _child_process = require('child_process');
+
+var _child_process2 = _interopRequireDefault(_child_process);
+
+var _http = require('http');
+
+var _http2 = _interopRequireDefault(_http);
+
+var _process = require('process');
+
+var _process2 = _interopRequireDefault(_process);
+
+var _IuguResource = require('./IuguResource');
+
+var _IuguResource2 = _interopRequireDefault(_IuguResource);
+
+var _Accounts = require('./resources/Accounts');
+
+var _Accounts2 = _interopRequireDefault(_Accounts);
+
+var _Charge = require('./resources/Charge');
+
+var _Charge2 = _interopRequireDefault(_Charge);
+
+var _Customers = require('./resources/Customers');
+
+var _Customers2 = _interopRequireDefault(_Customers);
+
+var _Invoices = require('./resources/Invoices');
+
+var _Invoices2 = _interopRequireDefault(_Invoices);
+
+var _MarketPlace = require('./resources/MarketPlace');
+
+var _MarketPlace2 = _interopRequireDefault(_MarketPlace);
+
+var _Plans = require('./resources/Plans');
+
+var _Plans2 = _interopRequireDefault(_Plans);
+
+var _Subscriptions = require('./resources/Subscriptions');
+
+var _Subscriptions2 = _interopRequireDefault(_Subscriptions);
+
+var _PaymentToken = require('./resources/PaymentToken');
+
+var _PaymentToken2 = _interopRequireDefault(_PaymentToken);
+
+var _Transfers = require('./resources/Transfers');
+
+var _Transfers2 = _interopRequireDefault(_Transfers);
+
+var _CustomerPaymentMethods = require('./resources/CustomerPaymentMethods');
+
+var _CustomerPaymentMethods2 = _interopRequireDefault(_CustomerPaymentMethods);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Iugu = function () {
   function Iugu(key, version) {
@@ -55,29 +101,29 @@ var Iugu = function () {
       this.DEFAULT_PORT = '443';
       this.DEFAULT_BASE_PATH = '/v1/';
       this.DEFAULT_API_VERSION = null;
-      this.DEFAULT_TIMEOUT = http.createServer().timeout;
-      this.PACKAGE_VERSION = packageJson.version;
+      this.DEFAULT_TIMEOUT = _http2.default.createServer().timeout;
+      this.PACKAGE_VERSION = _package2.default.version;
       this.USER_AGENT = {
         bindings_version: this.PACKAGE_VERSION,
         lang: 'node',
-        lang_version: process.version,
-        platform: process.platform,
+        lang_version: _process2.default.version,
+        platform: _process2.default.platform,
         publisher: 'iugu',
         uname: null
       };
       this.USER_AGENT_SERIALIZED = null;
-      this.IuguResource = IuguResource;
+      this.IuguResource = _IuguResource2.default;
       this.resources = {
-        Accounts: Accounts,
-        Charge: Charge,
-        Customers: Customers,
-        Invoices: Invoices,
-        MarketPlace: MarketPlace,
-        Plans: Plans,
-        Subscriptions: Subscriptions,
-        PaymentToken: PaymentToken,
-        Transfers: Transfers,
-        CustomerPaymentMethods: CustomerPaymentMethods
+        Accounts: _Accounts2.default,
+        Charge: _Charge2.default,
+        Customers: _Customers2.default,
+        Invoices: _Invoices2.default,
+        MarketPlace: _MarketPlace2.default,
+        Plans: _Plans2.default,
+        Subscriptions: _Subscriptions2.default,
+        PaymentToken: _PaymentToken2.default,
+        Transfers: _Transfers2.default,
+        CustomerPaymentMethods: _CustomerPaymentMethods2.default
       };
     }
   }, {
@@ -140,7 +186,7 @@ var Iugu = function () {
         return cb(this.USER_AGENT_SERIALIZED);
       }
 
-      exec('uname -a', function (err, uname) {
+      _child_process2.default.exec('uname -a', function (err, uname) {
         _this.USER_AGENT.uname = uname || 'UNKNOWN';
         _this.USER_AGENT_SERIALIZED = JSON.stringify(_this.USER_AGENT);
         cb(_this.USER_AGENT_SERIALIZED);

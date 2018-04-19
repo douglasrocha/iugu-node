@@ -1,35 +1,62 @@
 'use strict';
 
-var IuguResource = require('../IuguResource');
-var iuguMethod = IuguResource.method;
-
-module.exports = IuguResource.extend({
-  path: 'subscriptions',
-  includeBasic: ['create', 'list', 'retrieve', 'update', 'del'],
-
-  suspend: iuguMethod({
-    method: 'POST',
-    path: '{subscriptionId}/suspend',
-    urlParams: ['subscriptionId']
-  }),
-  activate: iuguMethod({
-    method: 'POST',
-    path: '{subscriptionId}/activate',
-    urlParams: ['subscriptionId']
-  }),
-  change_plan: iuguMethod({
-    method: 'POST',
-    path: '{subscriptionId}/change_plan/{plan_identifier}',
-    urlParams: ['subscriptionId', 'plan_identifier']
-  }),
-  add_credits: iuguMethod({
-    method: 'PUT',
-    path: '{subscriptionId}/add_credits',
-    urlParams: ['subscriptionId']
-  }),
-  remove_credits: iuguMethod({
-    method: 'PUT',
-    path: '{subscriptionId}/remove_credits',
-    urlParams: ['subscriptionId']
-  })
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+
+var _IuguResource2 = require('../IuguResource');
+
+var _IuguResource3 = _interopRequireDefault(_IuguResource2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Subscriptions = function (_IuguResource) {
+  _inherits(Subscriptions, _IuguResource);
+
+  function Subscriptions(iugu, urlData) {
+    _classCallCheck(this, Subscriptions);
+
+    var _this = _possibleConstructorReturn(this, (Subscriptions.__proto__ || Object.getPrototypeOf(Subscriptions)).call(this, iugu, urlData));
+
+    _this.path = 'subscriptions', _this.includeBasic = ['create', 'list', 'retrieve', 'update', 'del'], _this.suspend = _IuguResource3.default.method({
+      method: 'POST',
+      path: '{subscriptionId}/suspend',
+      urlParams: ['subscriptionId']
+    });
+
+    _this.activate = _IuguResource3.default.method({
+      method: 'POST',
+      path: '{subscriptionId}/activate',
+      urlParams: ['subscriptionId']
+    });
+
+    _this.change_plan = _IuguResource3.default.method({
+      method: 'POST',
+      path: '{subscriptionId}/change_plan/{plan_identifier}',
+      urlParams: ['subscriptionId', 'plan_identifier']
+    });
+
+    _this.add_credits = _IuguResource3.default.method({
+      method: 'PUT',
+      path: '{subscriptionId}/add_credits',
+      urlParams: ['subscriptionId']
+    });
+
+    _this.remove_credits = _IuguResource3.default.method({
+      method: 'PUT',
+      path: '{subscriptionId}/remove_credits',
+      urlParams: ['subscriptionId']
+    });
+    return _this;
+  }
+
+  return Subscriptions;
+}(_IuguResource3.default);
+
+exports.default = new Subscriptions();
